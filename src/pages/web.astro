@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionIntro from '@/components/SectionIntro.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { CATEGORY_META } from '@/lib/site';
+import { getProjectsByCategory } from '@/lib/projects';
+
+const meta = CATEGORY_META['web'];
+const projects = await getProjectsByCategory('web');
+---
+<BaseLayout title={meta.title} description={meta.description}>
+  <div class="container-site py-12 sm:py-16">
+    <SectionIntro title={meta.title} subtitle={meta.subtitle} description={meta.description} />
+    {projects.length === 0 ? (
+      <p class="text-[15px] text-[var(--color-fg-muted)]">Nothing here yet — check back soon.</p>
+    ) : (
+      <ul class="grid gap-4 sm:grid-cols-2 animate-fade-up delay-1">
+        {projects.map((p) => (
+          <li>
+            <ProjectCard
+              title={p.data.title}
+              description={p.data.description}
+              status={p.data.status}
+              tags={p.data.tags}
+              year={p.data.year}
+              href={p.data.url}
+            />
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</BaseLayout>
