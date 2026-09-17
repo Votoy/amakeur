@@ -3,17 +3,17 @@ import { SITE } from '@/lib/site';
 const year = new Date().getFullYear();
 ---
 <footer class="mt-auto border-t border-[var(--color-border)]">
-  <div class="container-site flex flex-col gap-6 py-10 sm:flex-row sm:items-end sm:justify-between">
-    <div class="space-y-2">
-      <p class="text-sm font-medium tracking-tight">{SITE.name}</p>
-      <p class="max-w-sm text-[13px] leading-relaxed text-[var(--color-fg-muted)]">
+  <div class="container-site flex flex-col gap-7 py-12 sm:flex-row sm:items-end sm:justify-between">
+    <div class="space-y-2.5">
+      <p class="text-[0.8125rem] font-medium tracking-[0.04em]">{SITE.name}</p>
+      <p class="lockup max-w-sm">
         {SITE.secondary}
       </p>
     </div>
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[13px] text-[var(--color-fg-muted)]">
+    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-[var(--text-small)] text-[var(--color-fg-muted)]">
       <a href="/rss.xml" class="hover:text-[var(--color-accent)]">RSS</a>
       <a href="https://amakeur.com" class="hover:text-[var(--color-accent)]">amakeur.com</a>
-      <span class="font-[family-name:var(--font-mono)] text-[11px]">© {year}</span>
+      <span class="font-[family-name:var(--font-mono)] text-[var(--text-micro)] tracking-[0.06em]">© {year}</span>
     </div>
   </div>
 </footer>

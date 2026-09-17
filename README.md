@@ -8,9 +8,9 @@ Independent digital studio site — **I don't code. I make.**
 
 ## Live preview
 
-Redesign (Sep 2026): theatrical hero, indexed catalog, editorial blog, clay accent, easter eggs.
+Typography polish (Sep 2026): Fraunces + Source Sans 3 + JetBrains Mono; locked slogan *Amateur at code. Serious about making.*; theatrical hero, indexed catalog, editorial blog, clay accent.
 
-**Public HTTPS:** https://carmen-properties-agenda-interactions.trycloudflare.com
+**Public HTTPS:** https://serum-webcams-homes-note.trycloudflare.com
 
 Cloudflare quick tunnel serving local `dist/` (ephemeral while the box server runs). Durable option: GitHub Pages workflow in `.github/workflows/deploy-pages.yml`, or deploy `dist/` to Cloudflare Pages / Netlify / Surge.
 
@@ -29,13 +29,25 @@ Node.js ≥ 22.12 required.
 
 | Path | Purpose |
 |------|---------|
-| `/` | Home — theatrical hero: *I don't code. I make.* |
-| `/apps` | Software (indexed catalog) |
+| `/` | Home — hero: *I don't code. I make.* |
+| `/apps` | Software |
 | `/games` | Games |
 | `/web` | Interactive / experimental sites |
 | `/labs` | Vibecoding experiments |
-| `/blog`, `/blog/[slug]` | Editorial writing list |
+| `/blog`, `/blog/[slug]` | Writing |
 | `/about` | Studio manifesto |
 | `/rss.xml` | RSS |
 | `/sitemap-index.xml` | Sitemap |
 | `/robots.txt` | Robots |
+
+## Edit content
+
+- **Blog posts:** `src/content/blog/*.md` (title, description, pubDate, tags…)
+- **Projects:** `src/content/projects/*.md` (category: apps|games|web|labs; status: shipping|experiment|archived|concept)
+- **Site copy / nav:** `src/lib/site.ts`
+- **Design tokens:** `src/styles/global.css` (`@theme` + `.dark`)
+- Collections: `src/content.config.ts`
+
+## Design notes
+
+Quiet Linear / Read.cv energy — no cheap gradients or glow spam. Spacing 4…128, 2–3 radii, semantic light/dark. Blog measure ~640–760px. Motion 150–350ms CSS-first; theme toggle without flash; hero secondary line on hover/click.

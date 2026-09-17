@@ -7,20 +7,20 @@ interface Props {
 }
 const { title, subtitle, description, indexLabel } = Astro.props;
 ---
-<header class="mb-12 max-w-2xl animate-fade-up">
-  <p class="mb-3 font-[family-name:var(--font-mono)] text-[11px] font-medium uppercase tracking-[0.16em] text-[var(--color-fg-subtle)]">
+<header class="mb-14 max-w-2xl animate-fade-up">
+  <p class="mb-3.5 font-[family-name:var(--font-mono)] text-[var(--text-micro)] font-medium uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
     {indexLabel ?? `AMAKEUR / ${title}`}
   </p>
-  <h1 class="font-[family-name:var(--font-display)] text-[clamp(2.75rem,7vw,4.25rem)] leading-[0.95] tracking-[-0.04em] text-[var(--color-fg)]">
+  <h1 class="font-[family-name:var(--font-display)] text-[clamp(2.5rem,6.5vw,4rem)] leading-[0.92] tracking-[-0.035em] text-[var(--color-fg)]" style="font-optical-sizing: auto; font-weight: 400;">
     {title}
   </h1>
   {subtitle && (
-    <p class="mt-4 text-lg italic text-[var(--color-fg-muted)] font-[family-name:var(--font-display)]">
+    <p class="mt-5 text-[clamp(1.05rem,2vw,1.25rem)] italic leading-snug tracking-[-0.015em] text-[var(--color-fg-muted)] font-[family-name:var(--font-display)]" style="font-optical-sizing: auto;">
       {subtitle}
     </p>
   )}
   {description && (
-    <p class="mt-4 max-w-xl text-[15px] leading-relaxed text-[var(--color-fg-muted)]">{description}</p>
+    <p class="mt-5 max-w-[36rem] text-[var(--text-body-sm)] leading-[1.65] tracking-[0.01em] text-[var(--color-fg-muted)]">{description}</p>
   )}
-  <hr class="rule-accent mt-8 max-w-[4rem]" />
+  <hr class="rule-accent mt-9 max-w-[3.5rem]" />
 </header>
