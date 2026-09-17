@@ -6,54 +6,83 @@ import { SITE } from '@/lib/site';
   title="About"
   description="AMAKEUR｜野造 — independent digital studio founded by a non-programmer. Amateur at code. Serious about making."
 >
-  <article class="container-site py-12 sm:py-16">
-    <header class="measure mx-auto mb-10 animate-fade-up">
-      <p class="mb-2 text-[12px] font-medium uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
-        Studio
-      </p>
-      <h1 class="font-[family-name:var(--font-display)] text-4xl tracking-[-0.03em] sm:text-5xl">
-        About AMAKEUR｜野造
-      </h1>
-    </header>
+  <article class="relative container-site py-12 sm:py-16">
+    <!-- Vertical spine -->
+    <div class="pointer-events-none absolute left-2 top-16 hidden h-[28rem] lg:block" aria-hidden="true">
+      <p class="spine">AMAKEUR</p>
+    </div>
 
-    <div class="prose-amakeur measure mx-auto animate-fade-up delay-1">
-      <p>
-        <strong>AMAKEUR｜野造</strong> is an independent digital studio founded by someone who does not
-        primarily write code. The name is intentional: <em>amateur</em> as in lover of the craft —
-        not as an apology.
-      </p>
-      <p>
-        We ship software, games, websites, tools, and unnamed experiments. The method is unorthodox
-        on purpose: natural language, AI, aesthetics, curiosity, and a bit of wild-path energy
-        （野造）. If a thing wants to exist, we find a way to make it — without waiting for
-        permission from a programming degree.
-      </p>
-      <h2>I don't code. I make.</h2>
-      <p>
-        Coding is one instrument. Making is the practice. We care about the feeling of a product —
-        the silence between interactions, the honesty of a sentence, the small delight that doesn't
-        need a changelog.
-      </p>
-      <p>
-        <strong>Amateur at code. Serious about making.</strong> That is not a slogan to soften
-        expectations. It is a filter: we would rather ship something slightly imperfect and alive
-        than something polished and empty.
-      </p>
-      <h2>What we work on</h2>
-      <ul>
-        <li><a href="/apps">Apps</a> — private utilities and quiet software</li>
-        <li><a href="/games">Games</a> — playable sketches of ordinary life</li>
-        <li><a href="/web">Web</a> — interactive and experimental sites</li>
-        <li><a href="/labs">Labs</a> — vibecoding without a category</li>
-      </ul>
-      <h2>Voice</h2>
-      <p>
-        Honest. Craft-serious. Slightly self-deprecating. Chinese and English both welcome.
-        No AI-slop marketing. No fake scarcity. If we don't know yet, we say so.
-      </p>
-      <p>
-        Production home: <a href="https://amakeur.com">{SITE.domain}</a>.
-      </p>
+    <div class="mx-auto grid max-w-5xl gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+      <header class="animate-fade-up lg:pt-4">
+        <p class="mb-3 font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.16em] text-[var(--color-fg-subtle)]">
+          Studio / 关于
+        </p>
+        <h1 class="font-[family-name:var(--font-display)] text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] tracking-[-0.04em]">
+          About<br /><em class="not-italic text-[var(--color-accent)]">AMAKEUR</em>｜野造
+        </h1>
+        <blockquote class="mt-8 border-l-2 border-[var(--color-accent)] pl-5 font-[family-name:var(--font-display)] text-2xl leading-snug tracking-[-0.02em] text-[var(--color-fg)] sm:text-3xl">
+          I don't code.<br />I <em class="text-[var(--color-accent)]">make.</em>
+        </blockquote>
+        <p class="mt-4 text-[13px] text-[var(--color-fg-muted)]">
+          Amateur at code. Serious about making.
+        </p>
+      </header>
+
+      <div class="prose-amakeur animate-fade-up delay-1 max-w-none">
+        <p>
+          <strong>AMAKEUR｜野造</strong> is an independent digital studio founded by someone who does not
+          primarily write code. The name is intentional: <em>amateur</em> as in lover of the craft —
+          not as an apology.
+        </p>
+        <p>
+          We ship software, games, websites, tools, and unnamed experiments. The method is unorthodox
+          on purpose: natural language, AI, aesthetics, curiosity, and a bit of wild-path energy
+          （野造）. If a thing wants to exist, we find a way to make it — without waiting for
+          permission from a programming degree.
+        </p>
+
+        <div class="my-8 grid gap-4 border-y border-[var(--color-border)] py-6 sm:grid-cols-2">
+          <div>
+            <p class="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">EN</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-[var(--color-fg-muted)] !mb-0">
+              Coding is one instrument. Making is the practice.
+            </p>
+          </div>
+          <div>
+            <p class="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">中</p>
+            <p class="mt-2 text-[15px] leading-relaxed text-[var(--color-fg-muted)] !mb-0">
+              写代码只是手段。造物才是正事。
+            </p>
+          </div>
+        </div>
+
+        <p>
+          We care about the feeling of a product — the silence between interactions, the honesty of a
+          sentence, the small delight that doesn't need a changelog.
+        </p>
+        <p>
+          <strong>Amateur at code. Serious about making.</strong> That is not a slogan to soften
+          expectations. It is a filter: we would rather ship something slightly imperfect and alive
+          than something polished and empty.
+        </p>
+
+        <h2>What we work on</h2>
+        <ul>
+          <li><a href="/apps">Apps</a> — private utilities and quiet software</li>
+          <li><a href="/games">Games</a> — playable sketches of ordinary life</li>
+          <li><a href="/web">Web</a> — interactive and experimental sites</li>
+          <li><a href="/labs">Labs</a> — vibecoding without a category</li>
+        </ul>
+
+        <h2>Voice</h2>
+        <p>
+          Honest. Craft-serious. Slightly self-deprecating. Chinese and English both welcome.
+          No AI-slop marketing. No fake scarcity. If we don't know yet, we say so.
+        </p>
+        <p>
+          Production home: <a href="https://amakeur.com">{SITE.domain}</a>.
+        </p>
+      </div>
     </div>
   </article>
 </BaseLayout>
