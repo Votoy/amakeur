@@ -1,0 +1,77 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/lib/site';
+---
+<BaseLayout>
+  <section class="relative flex min-h-[calc(100dvh-3.5rem)] flex-col items-center justify-center px-5 py-20">
+    <div class="mx-auto w-full max-w-3xl text-center">
+      <button
+        type="button"
+        id="hero-reveal"
+        class="group relative mx-auto block w-full cursor-pointer border-0 bg-transparent p-0 text-center"
+        aria-describedby="hero-secondary"
+        aria-expanded="false"
+      >
+        <h1
+          class="animate-fade-up font-[family-name:var(--font-display)] text-[clamp(2.25rem,8vw,4.75rem)] leading-[1.05] tracking-[-0.04em] text-[var(--color-fg)]"
+        >
+          I don't code. I make.
+        </h1>
+        <p
+          id="hero-secondary"
+          class="hero-secondary mt-5 max-h-0 overflow-hidden text-[15px] text-[var(--color-fg-muted)] opacity-0 transition-all duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:max-h-12 group-hover:opacity-100 group-focus-visible:max-h-12 group-focus-visible:opacity-100 sm:text-base"
+        >
+          Amateur at code. Serious about making.
+        </p>
+      </button>
+
+      <nav
+        class="animate-fade-up delay-2 mt-14 flex flex-wrap items-center justify-center gap-x-1 gap-y-2 text-[13px] text-[var(--color-fg-muted)]"
+        aria-label="Studio sections"
+      >
+        {SITE.nav.filter((n) => n.href !== '/about' && n.href !== '/blog').map((item, i, arr) => (
+          <>
+            <a
+              href={item.href}
+              class="rounded-[var(--radius-md)] px-2.5 py-1.5 transition-colors duration-[var(--duration-fast)] hover:bg-[var(--color-surface)] hover:text-[var(--color-fg)]"
+              data-astro-prefetch
+            >
+              {item.label}
+            </a>
+            {i < arr.length - 1 && <span class="text-[var(--color-fg-subtle)]" aria-hidden="true">·</span>}
+          </>
+        ))}
+      </nav>
+
+      <div class="animate-fade-up delay-3 mt-8 flex items-center justify-center gap-4 text-[13px]">
+        <a href="/blog" class="text-[var(--color-fg-muted)] underline-offset-4 hover:text-[var(--color-fg)] hover:underline" data-astro-prefetch>Blog</a>
+        <span class="text-[var(--color-border-strong)]" aria-hidden="true">/</span>
+        <a href="/about" class="text-[var(--color-fg-muted)] underline-offset-4 hover:text-[var(--color-fg)] hover:underline" data-astro-prefetch>About</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function initHero() {
+    const btn = document.getElementById('hero-reveal');
+    const secondary = document.getElementById('hero-secondary');
+    if (!btn || !secondary || btn.dataset.bound === '1') return;
+    btn.dataset.bound = '1';
+    let locked = false;
+    btn.addEventListener('click', () => {
+      locked = !locked;
+      btn.setAttribute('aria-expanded', String(locked));
+      secondary.classList.toggle('is-open', locked);
+    });
+  }
+  initHero();
+  document.addEventListener('astro:page-load', initHero);
+</script>
+
+<style>
+  .hero-secondary.is-open {
+    max-height: 3rem;
+    opacity: 1;
+  }
+</style>
