@@ -1,0 +1,98 @@
+---
+import { SITE } from '@/lib/site';
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = Astro.url.pathname;
+---
+<header class="sticky top-0 z-50 border-b border-[var(--color-border)]/70 bg-[var(--color-bg)]/80 backdrop-blur-md">
+  <div class="container-site flex h-14 items-center justify-between gap-4">
+    <a
+      href="/"
+      class="group flex items-baseline gap-2 text-sm font-medium tracking-tight text-[var(--color-fg)]"
+      data-astro-prefetch
+    >
+      <span class="transition-opacity duration-[var(--duration-fast)] group-hover:opacity-70">AMAKEUR</span>
+      <span class="hidden text-[var(--color-fg-subtle)] sm:inline" aria-hidden="true">｜</span>
+      <span class="hidden text-[var(--color-fg-muted)] sm:inline">野造</span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
+      {SITE.nav.map((item) => {
+        const active = pathname === item.href || pathname.startsWith(item.href + '/');
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] transition-colors duration-[var(--duration-fast)]',
+              active
+                ? 'bg-[var(--color-surface)] text-[var(--color-fg)]'
+                : 'text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]',
+            ]}
+            data-astro-prefetch
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <div class="flex items-center gap-1">
+      <ThemeToggle />
+      <button
+        type="button"
+        id="nav-open"
+        class="inline-flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] text-[var(--color-fg-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-fg)] md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="hidden border-t border-[var(--color-border)] md:hidden" hidden>
+    <nav class="container-site flex flex-col gap-1 py-3" aria-label="Mobile">
+      {SITE.nav.map((item) => {
+        const active = pathname === item.href || pathname.startsWith(item.href + '/');
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'rounded-[var(--radius-md)] px-3 py-2 text-sm',
+              active
+                ? 'bg-[var(--color-surface)] text-[var(--color-fg)]'
+                : 'text-[var(--color-fg-muted)]',
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+  </div>
+</header>
+
+<script>
+  function initMobileNav() {
+    const btn = document.getElementById('nav-open');
+    const panel = document.getElementById('mobile-nav');
+    if (!btn || !panel || btn.dataset.bound === '1') return;
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', () => {
+      const open = panel.hasAttribute('hidden');
+      if (open) {
+        panel.removeAttribute('hidden');
+        panel.classList.remove('hidden');
+      } else {
+        panel.setAttribute('hidden', '');
+        panel.classList.add('hidden');
+      }
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  }
+  initMobileNav();
+  document.addEventListener('astro:page-load', initMobileNav);
+</script>
