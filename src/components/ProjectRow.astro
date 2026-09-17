@@ -1,0 +1,47 @@
+---
+interface Props {
+  index: number;
+  title: string;
+  description: string;
+  status: 'shipping' | 'experiment' | 'archived' | 'concept';
+  tags?: string[];
+  year?: number;
+  href?: string;
+}
+
+const { index, title, description, status, tags = [], year, href } = Astro.props;
+const statusLabel: Record<Props['status'], string> = {
+  shipping: 'Shipping',
+  experiment: 'Experiment',
+  archived: 'Archived',
+  concept: 'Concept',
+};
+const Tag = href ? 'a' : 'article';
+const num = String(index).padStart(2, '0');
+---
+<li class="reveal">
+  <Tag
+    href={href}
+    class="catalog-row group"
+    data-astro-prefetch={href ? true : undefined}
+  >
+    <span class="catalog-index" aria-hidden="true">{num}</span>
+    <div>
+      <h3 class="catalog-title">{title}</h3>
+      <p class="catalog-desc">{description}</p>
+      {tags.length > 0 && (
+        <ul class="mt-2 hidden flex-wrap gap-1.5 group-hover:flex group-focus-visible:flex">
+          {tags.map((tag) => (
+            <li class="font-[family-name:var(--font-mono)] text-[10px] uppercase tracking-[0.06em] text-[var(--color-fg-subtle)]">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <div class="catalog-meta">
+      <span class={`status-${status}`}>{statusLabel[status]}</span>
+      {year && <span class="tabular-nums">{year}</span>}
+    </div>
+  </Tag>
+</li>
