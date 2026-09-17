@@ -2,15 +2,16 @@
 import { SITE } from '@/lib/site';
 
 const chips = SITE.nav.filter((n) => n.href !== '/about' && n.href !== '/blog');
-const primary = "I don't code. I make.";
+const primary = SITE.tagline;
+const slogan = SITE.secondary;
 ---
 
-<section class="hero-studio relative flex min-h-[calc(100dvh-3.5rem)] flex-col justify-center overflow-hidden px-5 py-16 sm:py-20">
+<section class="hero-studio relative flex min-h-[calc(100dvh-3.75rem)] flex-col justify-center overflow-hidden px-[clamp(1.25rem,4vw,2rem)] py-16 sm:py-24">
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="hero-spotlight" id="hero-spotlight" aria-hidden="true"></div>
 
-  <div class="relative z-[1] mx-auto w-full max-w-5xl">
-    <p class="mb-8 font-[family-name:var(--font-mono)] text-[11px] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)] animate-fade-up">
+  <div class="relative z-[1] mx-auto w-full max-w-[58rem]">
+    <p class="mb-7 font-[family-name:var(--font-mono)] text-[var(--text-micro)] uppercase tracking-[0.2em] text-[var(--color-fg-subtle)] animate-fade-up">
       Studio · AMAKEUR｜野造
     </p>
 
@@ -24,28 +25,27 @@ const primary = "I don't code. I make.";
     >
       <h1
         id="hero-line"
-        class="hero-line font-[family-name:var(--font-display)] text-[clamp(2.75rem,11vw,6.5rem)] leading-[0.95] tracking-[-0.045em] text-[var(--color-fg)]"
+        class="hero-line font-[family-name:var(--font-display)] text-[clamp(2.5rem,10.5vw,6.25rem)] leading-[0.9] tracking-[-0.038em] text-[var(--color-fg)]"
         data-final={primary}
       >
-        <span class="hero-ssr">{primary.split('').map((ch) => ch === ' ' ? ' ' : ch).join('')}</span>
+        <span class="hero-ssr">{primary}</span>
       </h1>
 
       <p
         id="hero-secondary"
-        class="hero-secondary mt-6 max-w-xl overflow-hidden text-[15px] leading-relaxed text-[var(--color-fg-muted)] sm:text-base"
-        data-line="Amateur at code. Serious about making."
-        data-alt="Amateur at make. Serious about making."
+        class="hero-secondary mt-7 max-w-lg overflow-hidden font-[family-name:var(--font-sans)] text-[clamp(0.875rem,2.2vw,1rem)] leading-[1.45] tracking-[0.045em] text-[var(--color-fg-muted)]"
+        data-line={slogan}
       >
         <span class="hero-sec-inner" id="hero-sec-inner"></span>
       </p>
     </button>
 
-    <p class="mt-3 text-[12px] text-[var(--color-fg-subtle)] opacity-0 transition-opacity duration-[var(--duration-slow)]" id="hero-hint">
+    <p class="mt-4 text-[11px] tracking-[0.02em] text-[var(--color-fg-subtle)] opacity-0 transition-opacity duration-[var(--duration-slow)]" id="hero-hint">
       Hover letters · click to reveal · or type <kbd class="font-[family-name:var(--font-mono)] text-[var(--color-accent)]">make</kbd>
     </p>
 
     <nav
-      class="mt-14 flex flex-wrap items-center gap-2.5 sm:gap-3"
+      class="mt-16 flex flex-wrap items-center gap-2.5 sm:gap-3"
       aria-label="Studio sections"
       id="section-chips"
     >
@@ -62,7 +62,7 @@ const primary = "I don't code. I make.";
       ))}
     </nav>
 
-    <div class="mt-10 flex items-center gap-5 text-[13px] text-[var(--color-fg-muted)]">
+    <div class="mt-12 flex items-center gap-5 text-[var(--text-small)] tracking-[0.01em] text-[var(--color-fg-muted)]">
       <a href="/blog" class="underline-offset-4 hover:text-[var(--color-fg)] hover:underline" data-astro-prefetch>Blog</a>
       <span class="text-[var(--color-border-strong)]" aria-hidden="true">/</span>
       <a href="/about" class="underline-offset-4 hover:text-[var(--color-fg)] hover:underline" data-astro-prefetch>About</a>
@@ -84,7 +84,7 @@ const primary = "I don't code. I make.";
       linear-gradient(to bottom, color-mix(in oklab, var(--color-border) 70%, transparent) 1px, transparent 1px);
     background-size: 64px 64px;
     mask-image: radial-gradient(ellipse 70% 55% at 50% 42%, black 10%, transparent 72%);
-    opacity: 0.45;
+    opacity: 0.4;
     animation: grid-drift 28s linear infinite;
     will-change: transform;
   }
@@ -100,7 +100,7 @@ const primary = "I don't code. I make.";
     pointer-events: none;
     background: radial-gradient(
       420px circle at var(--spot-x) var(--spot-y),
-      color-mix(in oklab, var(--color-accent) 10%, transparent),
+      color-mix(in oklab, var(--color-accent) 9%, transparent),
       transparent 55%
     );
     opacity: 0;
@@ -115,6 +115,8 @@ const primary = "I don't code. I make.";
     display: flex;
     flex-wrap: wrap;
     gap: 0;
+    font-optical-sizing: auto;
+    font-weight: 400;
   }
 
   .hero-char {
@@ -129,6 +131,7 @@ const primary = "I don't code. I make.";
 
   .hero-char.is-accent {
     font-style: italic;
+    font-weight: 450;
     color: var(--color-accent);
   }
 
@@ -140,12 +143,13 @@ const primary = "I don't code. I make.";
     max-height: 0;
     opacity: 0;
     transition:
-      max-height 320ms var(--ease-out-soft),
-      opacity 280ms var(--ease-out-soft);
+      max-height 360ms var(--ease-out-soft),
+      opacity 300ms var(--ease-out-soft),
+      margin 300ms var(--ease-out-soft);
   }
 
   .hero-secondary.is-open {
-    max-height: 4.5rem;
+    max-height: 5rem;
     opacity: 1;
   }
 
@@ -153,10 +157,18 @@ const primary = "I don't code. I make.";
     display: inline-block;
     color: var(--color-accent);
     font-style: italic;
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
   }
 
   #hero-hint.is-on {
-    opacity: 1;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 480px) {
+    .hero-line {
+      letter-spacing: -0.032em;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
