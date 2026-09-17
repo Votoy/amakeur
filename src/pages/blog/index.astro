@@ -28,19 +28,18 @@ const withMeta = await Promise.all(
       title="Blog"
       subtitle="Writing / making notes"
       description="Field notes from a non-programmer studio. Process over posture."
+      indexLabel="AMAKEUR / Journal"
     />
-    <ul class="grid gap-4 sm:grid-cols-2 animate-fade-up delay-1">
+    <ul class="editorial-list">
       {withMeta.map((post) => (
-        <li>
-          <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            href={`/blog/${post.id}`}
-            pubDate={post.data.pubDate}
-            readingMinutes={post.minutes}
-            tags={post.data.tags}
-          />
-        </li>
+        <BlogCard
+          title={post.data.title}
+          description={post.data.description}
+          href={`/blog/${post.id}`}
+          pubDate={post.data.pubDate}
+          readingMinutes={post.minutes}
+          tags={post.data.tags}
+        />
       ))}
     </ul>
   </div>
