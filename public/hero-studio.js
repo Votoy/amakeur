@@ -42,44 +42,57 @@
 
     let locked = false;
     let typed = '';
+    let morphTimer = 0;
 
     const openSecondary = (force) => {
       if (locked && !force) return;
       secondary.classList.add('is-open');
       stage.setAttribute('aria-expanded', 'true');
-      const base = secondary.dataset.line || '';
+      const base = secondary.dataset.line || 'Amateur at code. Serious about making.';
+      window.clearTimeout(morphTimer);
       secInner.innerHTML = '';
       const parts = base.split('code');
-      if (parts.length === 2) {
-        secInner.appendChild(document.createTextNode(parts[0]));
-        const morph = document.createElement('span');
-        morph.className = 'morph';
-        morph.textContent = 'code';
-        secInner.appendChild(morph);
-        secInner.appendChild(document.createTextNode(parts[1]));
-        if (!REDUCE()) {
-          let step = 0;
-          const from = 'code';
-          const to = 'make';
-          const tick = () => {
-            step++;
-            if (step <= to.length) {
-              morph.textContent = to.slice(0, step) + from.slice(step);
-              window.setTimeout(tick, 70);
-            } else {
-              morph.textContent = to;
-            }
-          };
-          window.setTimeout(tick, 180);
-        } else {
-          morph.textContent = 'make';
-        }
-      } else {
+      if (parts.length !== 2) {
         secInner.textContent = base;
+        return;
       }
+
+      secInner.appendChild(document.createTextNode(parts[0]));
+      const morph = document.createElement('span');
+      morph.className = 'morph';
+      morph.textContent = 'code';
+      secInner.appendChild(morph);
+      secInner.appendChild(document.createTextNode(parts[1]));
+
+      if (REDUCE()) return;
+
+      const from = 'code';
+      const to = 'make';
+
+      const morphToward = (start, target, onDone) => {
+        let step = 0;
+        const tick = () => {
+          step++;
+          if (step <= target.length) {
+            morph.textContent = target.slice(0, step) + start.slice(step);
+            morphTimer = window.setTimeout(tick, 65);
+          } else {
+            morph.textContent = target;
+            if (onDone) onDone();
+          }
+        };
+        tick();
+      };
+
+      morphTimer = window.setTimeout(() => {
+        morphToward(from, to, () => {
+          morphTimer = window.setTimeout(() => morphToward(to, from), 900);
+        });
+      }, 180);
     };
 
     const closeSecondary = () => {
+      window.clearTimeout(morphTimer);
       secondary.classList.remove('is-open');
       stage.setAttribute('aria-expanded', 'false');
     };
