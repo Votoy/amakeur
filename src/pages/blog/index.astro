@@ -1,0 +1,47 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import BlogCard from '@/components/BlogCard.astro';
+import SectionIntro from '@/components/SectionIntro.astro';
+import { getPublishedPosts } from '@/lib/projects';
+import { readingTime } from '@/lib/utils';
+import { render } from 'astro:content';
+
+const posts = await getPublishedPosts();
+const withMeta = await Promise.all(
+  posts.map(async (post) => {
+    const { remarkPluginFrontmatter } = await render(post);
+    const body = post.body ?? '';
+    return {
+      ...post,
+      minutes: readingTime(body),
+      rendered: remarkPluginFrontmatter,
+    };
+  }),
+);
+---
+<BaseLayout
+  title="Blog"
+  description="Notes on making without coding — craft, process, and honest experiments from AMAKEUR｜野造."
+>
+  <div class="container-site py-12 sm:py-16">
+    <SectionIntro
+      title="Blog"
+      subtitle="Writing / making notes"
+      description="Field notes from a non-programmer studio. Process over posture."
+    />
+    <ul class="grid gap-4 sm:grid-cols-2 animate-fade-up delay-1">
+      {withMeta.map((post) => (
+        <li>
+          <BlogCard
+            title={post.data.title}
+            description={post.data.description}
+            href={`/blog/${post.id}`}
+            pubDate={post.data.pubDate}
+            readingMinutes={post.minutes}
+            tags={post.data.tags}
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
