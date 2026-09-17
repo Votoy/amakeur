@@ -4,33 +4,44 @@ import ThemeToggle from './ThemeToggle.astro';
 
 const pathname = Astro.url.pathname;
 ---
-<header class="sticky top-0 z-50 border-b border-[var(--color-border)]/70 bg-[var(--color-bg)]/80 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-[var(--color-border)]/80 bg-[var(--color-bg)]/75 backdrop-blur-md">
   <div class="container-site flex h-14 items-center justify-between gap-4">
     <a
       href="/"
       class="group flex items-baseline gap-2 text-sm font-medium tracking-tight text-[var(--color-fg)]"
       data-astro-prefetch
+      id="brand-link"
     >
       <span class="transition-opacity duration-[var(--duration-fast)] group-hover:opacity-70">AMAKEUR</span>
       <span class="hidden text-[var(--color-fg-subtle)] sm:inline" aria-hidden="true">｜</span>
-      <span class="hidden text-[var(--color-fg-muted)] sm:inline">野造</span>
+      <span
+        class="hidden text-[var(--color-fg-muted)] sm:inline select-none"
+        id="yezao"
+        title="Long-press"
+      >野造</span>
     </a>
 
-    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-0.5 md:flex" aria-label="Primary">
       {SITE.nav.map((item) => {
         const active = pathname === item.href || pathname.startsWith(item.href + '/');
         return (
           <a
             href={item.href}
             class:list={[
-              'rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] transition-colors duration-[var(--duration-fast)]',
+              'relative rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] transition-colors duration-[var(--duration-fast)]',
               active
-                ? 'bg-[var(--color-surface)] text-[var(--color-fg)]'
+                ? 'text-[var(--color-fg)]'
                 : 'text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]',
             ]}
             data-astro-prefetch
           >
             {item.label}
+            {active && (
+              <span
+                class="absolute inset-x-2.5 -bottom-px h-px bg-[var(--color-accent)]"
+                aria-hidden="true"
+              />
+            )}
           </a>
         );
       })}
@@ -76,6 +87,20 @@ const pathname = Astro.url.pathname;
 </header>
 
 <script>
+  function showToast(msg: string) {
+    let el = document.querySelector('.studio-toast') as HTMLElement | null;
+    if (!el) {
+      el = document.createElement('div');
+      el.className = 'studio-toast';
+      el.setAttribute('role', 'status');
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.classList.add('is-on');
+    window.clearTimeout((el as HTMLElement & { _t?: number })._t);
+    (el as HTMLElement & { _t?: number })._t = window.setTimeout(() => el!.classList.remove('is-on'), 2000);
+  }
+
   function initMobileNav() {
     const btn = document.getElementById('nav-open');
     const panel = document.getElementById('mobile-nav');
@@ -93,6 +118,38 @@ const pathname = Astro.url.pathname;
       btn.setAttribute('aria-expanded', String(open));
     });
   }
+
+  function initYezao() {
+    const el = document.getElementById('yezao');
+    if (!el || el.dataset.bound === '1') return;
+    el.dataset.bound = '1';
+    let timer: number | undefined;
+    const start = () => {
+      timer = window.setTimeout(() => {
+        showToast('野造 · make without permission');
+        el.animate?.(
+          [
+            { color: 'var(--color-fg-muted)' },
+            { color: 'var(--color-accent)' },
+            { color: 'var(--color-fg-muted)' },
+          ],
+          { duration: 600, easing: 'ease-out' },
+        );
+      }, 650);
+    };
+    const cancel = () => {
+      if (timer) window.clearTimeout(timer);
+    };
+    el.addEventListener('pointerdown', start);
+    el.addEventListener('pointerup', cancel);
+    el.addEventListener('pointerleave', cancel);
+    el.addEventListener('pointercancel', cancel);
+  }
+
   initMobileNav();
-  document.addEventListener('astro:page-load', initMobileNav);
+  initYezao();
+  document.addEventListener('astro:page-load', () => {
+    initMobileNav();
+    initYezao();
+  });
 </script>
