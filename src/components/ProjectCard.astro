@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  status: 'shipping' | 'experiment' | 'archived' | 'concept';
+  tags?: string[];
+  year?: number;
+  href?: string;
+}
+
+const { title, description, status, tags = [], year, href } = Astro.props;
+const statusLabel: Record<Props['status'], string> = {
+  shipping: 'Shipping',
+  experiment: 'Experiment',
+  archived: 'Archived',
+  concept: 'Concept',
+};
+const Tag = href ? 'a' : 'article';
+---
+<Tag
+  href={href}
+  class="card-lift group block rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] p-5"
+>
+  <div class="mb-3 flex items-center justify-between gap-3">
+    <span class={`text-[11px] font-medium uppercase tracking-[0.08em] status-${status}`}>
+      {statusLabel[status]}
+    </span>
+    {year && <span class="text-[11px] tabular-nums text-[var(--color-fg-subtle)]">{year}</span>}
+  </div>
+  <h3 class="mb-1.5 text-[15px] font-medium tracking-tight text-[var(--color-fg)] transition-colors duration-[var(--duration-fast)] group-hover:text-[var(--color-fg)]">
+    {title}
+  </h3>
+  <p class="mb-4 text-[13px] leading-relaxed text-[var(--color-fg-muted)]">
+    {description}
+  </p>
+  {tags.length > 0 && (
+    <ul class="flex flex-wrap gap-1.5">
+      {tags.map((tag) => (
+        <li class="rounded-[var(--radius-sm)] bg-[var(--color-surface)] px-2 py-0.5 text-[11px] text-[var(--color-fg-muted)]">
+          {tag}
+        </li>
+      ))}
+    </ul>
+  )}
+</Tag>
