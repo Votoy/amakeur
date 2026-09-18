@@ -4,47 +4,44 @@ import ThemeToggle from './ThemeToggle.astro';
 
 const pathname = Astro.url.pathname;
 ---
-<header class="sticky top-0 z-50 border-b border-[var(--color-border)]/80 bg-[var(--color-bg)]/75 backdrop-blur-md">
-  <div class="container-site flex h-14 items-center justify-between gap-4">
+<header class="sticky top-0 z-50 border-b border-[var(--color-border)]/70 bg-[var(--color-bg)]/78 backdrop-blur-md">
+  <div class="container-site flex h-[3.75rem] items-center justify-between gap-6">
     <a
       href="/"
-      class="group flex items-baseline gap-2 text-sm font-medium tracking-tight text-[var(--color-fg)]"
+      class="group flex items-baseline gap-2 text-[0.8125rem] font-medium tracking-[0.04em] text-[var(--color-fg)]"
       data-astro-prefetch
       id="brand-link"
     >
-      <span class="transition-opacity duration-[var(--duration-fast)] group-hover:opacity-70">AMAKEUR</span>
+      <span class="transition-opacity duration-[var(--duration-fast)] group-hover:opacity-65">AMAKEUR</span>
       <span class="hidden text-[var(--color-fg-subtle)] sm:inline" aria-hidden="true">｜</span>
       <span
-        class="hidden text-[var(--color-fg-muted)] sm:inline select-none"
+        class="hidden text-[var(--color-fg-muted)] sm:inline select-none tracking-[0.08em]"
         id="yezao"
         title="Long-press"
       >野造</span>
     </a>
 
-    <nav class="hidden items-center gap-0.5 md:flex" aria-label="Primary">
+    <nav class="site-nav relative hidden items-center gap-1 md:flex" aria-label="Primary" id="primary-nav">
       {SITE.nav.map((item) => {
         const active = pathname === item.href || pathname.startsWith(item.href + '/');
         return (
           <a
             href={item.href}
             class:list={[
-              'relative rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] transition-colors duration-[var(--duration-fast)]',
+              'nav-link relative rounded-[var(--radius-md)] px-3 py-1.5 text-[13px] tracking-[0.02em] transition-colors duration-[var(--duration-fast)]',
               active
                 ? 'text-[var(--color-fg)]'
                 : 'text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]',
             ]}
             data-astro-prefetch
+            data-nav-active={active ? 'true' : 'false'}
+            aria-current={active ? 'page' : undefined}
           >
             {item.label}
-            {active && (
-              <span
-                class="absolute inset-x-2.5 -bottom-px h-px bg-[var(--color-accent)]"
-                aria-hidden="true"
-              />
-            )}
           </a>
         );
       })}
+      <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
     </nav>
 
     <div class="flex items-center gap-1">
@@ -65,18 +62,19 @@ const pathname = Astro.url.pathname;
   </div>
 
   <div id="mobile-nav" class="hidden border-t border-[var(--color-border)] md:hidden" hidden>
-    <nav class="container-site flex flex-col gap-1 py-3" aria-label="Mobile">
+    <nav class="container-site flex flex-col gap-0.5 py-3" aria-label="Mobile">
       {SITE.nav.map((item) => {
         const active = pathname === item.href || pathname.startsWith(item.href + '/');
         return (
           <a
             href={item.href}
             class:list={[
-              'rounded-[var(--radius-md)] px-3 py-2 text-sm',
+              'rounded-[var(--radius-md)] px-3 py-2.5 text-[0.9375rem] tracking-[0.01em]',
               active
                 ? 'bg-[var(--color-surface)] text-[var(--color-fg)]'
                 : 'text-[var(--color-fg-muted)]',
             ]}
+            aria-current={active ? 'page' : undefined}
           >
             {item.label}
           </a>
