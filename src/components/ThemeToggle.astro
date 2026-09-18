@@ -16,16 +16,70 @@
 </button>
 
 <script>
+  function applyTheme(next: 'light' | 'dark') {
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    try {
+      localStorage.setItem('theme', next);
+    } catch (_) {}
+    const meta = document.querySelectorAll('meta[name="theme-color"]');
+    const light = '#f7f5f2';
+    const dark = '#0c0b0a';
+    meta.forEach((m) => {
+      const media = m.getAttribute('media') || '';
+      if (media.includes('dark')) m.setAttribute('content', dark);
+      else if (media.includes('light')) m.setAttribute('content', light);
+      else m.setAttribute('content', next === 'dark' ? dark : light);
+    });
+  }
+
+  function toggleWithWipe(e: MouseEvent) {
+    const root = document.documentElement;
+    const next: 'light' | 'dark' = root.classList.contains('dark') ? 'light' : 'dark';
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const canVT = typeof document.startViewTransition === 'function';
+
+    if (!canVT || reduce) {
+      if (!reduce && document.body.animate) {
+        document.body.animate([{ opacity: 1 }, { opacity: 0.92 }, { opacity: 1 }], {
+          duration: 220,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        });
+      }
+      applyTheme(next);
+      return;
+    }
+
+    const x = e.clientX;
+    const y = e.clientY;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    root.classList.add('theme-wiping');
+    const transition = document.startViewTransition(() => applyTheme(next));
+    transition.ready
+      .then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
+          },
+          {
+            duration: 320,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          },
+        );
+      })
+      .catch(() => {});
+    transition.finished.finally(() => root.classList.remove('theme-wiping'));
+  }
+
   function initThemeToggle() {
     const btn = document.getElementById('theme-toggle');
     if (!btn || btn.dataset.bound === '1') return;
     btn.dataset.bound = '1';
-    btn.addEventListener('click', () => {
-      const root = document.documentElement;
-      const next = root.classList.contains('dark') ? 'light' : 'dark';
-      root.classList.toggle('dark', next === 'dark');
-      localStorage.setItem('theme', next);
-    });
+    btn.addEventListener('click', (e) => toggleWithWipe(e as MouseEvent));
   }
   initThemeToggle();
   document.addEventListener('astro:page-load', initThemeToggle);
