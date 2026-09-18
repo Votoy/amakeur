@@ -29,22 +29,40 @@ const jsonLd = {
 };
 ---
 <BaseLayout title={title} description={description} canonical={canonical} ogType="article" jsonLd={jsonLd}>
-  <article class="container-site py-12 sm:py-16">
-    <header class="measure mx-auto mb-10 animate-fade-up">
-      <p class="mb-3 text-[12px] uppercase tracking-[0.12em] text-[var(--color-fg-subtle)]">
+  <div class="read-progress" id="read-progress" aria-hidden="true"></div>
+  <article class="container-site section-pad" data-read-progress>
+    <header class="measure mx-auto mb-12 animate-fade-up">
+      <p class="mb-3.5 font-[family-name:var(--font-mono)] text-[var(--text-micro)] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]">
         <a href="/blog" class="hover:text-[var(--color-fg)]">Blog</a>
       </p>
-      <h1 class="font-[family-name:var(--font-display)] text-4xl tracking-[-0.03em] sm:text-5xl">
+      <h1 class="font-[family-name:var(--font-display)] text-[clamp(2rem,5vw,3.25rem)] leading-[1.05] tracking-[-0.03em]" style="font-optical-sizing: auto; font-weight: 400;">
         {title}
       </h1>
-      <p class="mt-4 text-[15px] text-[var(--color-fg-muted)]">{description}</p>
-      <div class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[13px] text-[var(--color-fg-subtle)]">
+      <p class="mt-5 text-[var(--text-body-sm)] leading-[1.6] text-[var(--color-fg-muted)]">{description}</p>
+      <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-[family-name:var(--font-mono)] text-[var(--text-micro)] tracking-[0.04em] text-[var(--color-fg-subtle)]">
         <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
         <span aria-hidden="true">·</span>
         <span>{minutes} min read</span>
         {tags.map((tag) => (
-          <span class="rounded-[var(--radius-sm)] bg-[var(--color-surface)] px-2 py-0.5 text-[11px]">#{tag}</span>
+          <span class="rounded-[var(--radius-sm)] bg-[var(--color-surface)] px-2 py-0.5 font-[family-name:var(--font-sans)] text-[11px] tracking-normal">#{tag}</span>
         ))}
+        <span aria-hidden="true" class="hidden sm:inline">·</span>
+        <button
+          type="button"
+          id="copy-link"
+          class="copy-link-btn inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] px-1.5 py-0.5 text-[var(--color-fg-subtle)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-accent)]"
+          data-url={canonical}
+          aria-label="Copy link to this post"
+        >
+          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+            <path d="M10 13a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07L11 5" />
+            <path d="M14 11a5 5 0 0 0-7.07 0L4.81 13.12a5 5 0 0 0 7.07 7.07L13 19" />
+          </svg>
+          <span data-copy-label>Copy link</span>
+          <svg class="copy-check h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12l5 5L20 7" />
+          </svg>
+        </button>
       </div>
     </header>
     <div class="prose-amakeur measure mx-auto animate-fade-up delay-1">
