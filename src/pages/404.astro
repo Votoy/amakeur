@@ -1,0 +1,40 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/lib/site';
+---
+<BaseLayout
+  title="404"
+  description="This page wandered off the wild path."
+  noIndex={true}
+>
+  <section class="container-site flex min-h-[calc(100dvh-3.75rem-8rem)] flex-col justify-center section-pad">
+    <p class="mb-5 font-[family-name:var(--font-mono)] text-[var(--text-micro)] uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
+      404 · off the map
+    </p>
+    <h1 class="font-[family-name:var(--font-display)] text-[clamp(2.5rem,8vw,4.5rem)] leading-[0.95] tracking-[-0.035em]" style="font-optical-sizing: auto; font-weight: 400;">
+      Lost,<br />
+      <em class="text-[var(--color-accent)] not-italic">not broken.</em>
+    </h1>
+    <p class="lockup mt-7 max-w-md">
+      This URL doesn’t exist — or hasn’t been made yet. {SITE.secondary}
+    </p>
+    <p class="mt-4 max-w-md text-[var(--text-body-sm)] text-[var(--color-fg-muted)]" lang="zh-Hans">
+      路走到这里断了。回去造别的。
+    </p>
+    <div class="mt-10 flex flex-wrap items-center gap-4 text-[var(--text-small)]">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-2 tracking-[0.02em] text-[var(--color-fg)] transition-colors duration-[var(--duration-fast)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+        data-astro-prefetch
+      >
+        Back home
+      </a>
+      <a href="/blog" class="text-[var(--color-fg-muted)] underline-offset-4 hover:text-[var(--color-fg)] hover:underline" data-astro-prefetch>
+        Read the blog
+      </a>
+      <a href="/labs" class="text-[var(--color-fg-muted)] underline-offset-4 hover:text-[var(--color-fg)] hover:underline" data-astro-prefetch>
+        Peek the labs
+      </a>
+    </div>
+  </section>
+</BaseLayout>
