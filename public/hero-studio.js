@@ -44,6 +44,10 @@
     let typed = '';
     let morphTimer = 0;
 
+    /**
+     * Temporary letter play on "code" → "make", then settle back to
+     * the exact slogan: "Amateur at code. Serious about making."
+     */
     const openSecondary = (force) => {
       if (locked && !force) return;
       secondary.classList.add('is-open');
@@ -69,6 +73,7 @@
       const from = 'code';
       const to = 'make';
 
+      // Progressive replace: target.slice(0,n) + start.slice(n)
       const morphToward = (start, target, onDone) => {
         let step = 0;
         const tick = () => {
@@ -86,6 +91,7 @@
 
       morphTimer = window.setTimeout(() => {
         morphToward(from, to, () => {
+          // Hold the wink, then settle back to exact slogan word "code"
           morphTimer = window.setTimeout(() => morphToward(to, from), 900);
         });
       }, 180);
@@ -174,7 +180,7 @@
 
     document.querySelectorAll('[data-chip]').forEach((chip) => {
       chip.addEventListener('pointermove', (e) => {
-        if (REDUCE()) return;
+        if (REDUCE() || window.matchMedia('(pointer: coarse)').matches) return;
         const r = chip.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width - 0.5;
         const py = (e.clientY - r.top) / r.height - 0.5;
