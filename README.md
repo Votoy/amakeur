@@ -2,17 +2,17 @@
 
 Independent digital studio site — **I don't code. I make.**
 
-- Production domain: [amakeur.com](https://amakeur.com)
+- Production: [amakeur.com](https://amakeur.com)
 - Stack: Astro + TypeScript + Tailwind CSS 4
 - Repo: [github.com/Votoy/amakeur](https://github.com/Votoy/amakeur)
 
 ## Live preview
 
-Typography polish (Sep 2026): Fraunces + Source Sans 3 + JetBrains Mono; locked slogan *Amateur at code. Serious about making.*; theatrical hero, indexed catalog, editorial blog, clay accent.
+Craft micro-details (Sep 2026): circular theme wipe, reading progress, copy-link, studio clock + wit, `?` shortcuts, sliding nav indicator, external arrows, 404, focus rings, logo wink + console stamp. Fraunces + Source Sans 3; locked slogan *Amateur at code. Serious about making.*
 
-**Public HTTPS:** https://serum-webcams-homes-note.trycloudflare.com
+**Public HTTPS:** https://aquatic-mary-fever-allowed.trycloudflare.com
 
-Cloudflare quick tunnel serving local `dist/` (ephemeral while the box server runs). Durable option: GitHub Pages workflow in `.github/workflows/deploy-pages.yml`, or deploy `dist/` to Cloudflare Pages / Netlify / Surge.
+Cloudflare quick tunnel serving local `dist/` (ephemeral). Durable: GitHub Pages workflow, or deploy `dist/`.
 
 ## Quick start
 
@@ -37,17 +37,7 @@ Node.js ≥ 22.12 required.
 | `/blog`, `/blog/[slug]` | Writing |
 | `/about` | Studio manifesto |
 | `/rss.xml` | RSS |
-| `/sitemap-index.xml` | Sitemap |
-| `/robots.txt` | Robots |
-
-## Edit content
-
-- **Blog posts:** `src/content/blog/*.md` (title, description, pubDate, tags…)
-- **Projects:** `src/content/projects/*.md` (category: apps|games|web|labs; status: shipping|experiment|archived|concept)
-- **Site copy / nav:** `src/lib/site.ts`
-- **Design tokens:** `src/styles/global.css` (`@theme` + `.dark`)
-- Collections: `src/content.config.ts`
 
 ## Design notes
 
-Quiet Linear / Read.cv energy — no cheap gradients or glow spam. Spacing 4…128, 2–3 radii, semantic light/dark. Blog measure ~640–760px. Motion 150–350ms CSS-first; theme toggle without flash; hero secondary line on hover/click.
+Quiet Linear / Read.cv energy — no cheap gradients or glow. Motion 150–350ms; theme wipe without flash; hero secondary on hover/click. Press `?` for shortcuts.
